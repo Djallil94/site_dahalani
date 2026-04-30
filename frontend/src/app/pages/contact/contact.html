@@ -1,0 +1,37 @@
+<section id="contact" class="py-5 section-bg">
+  <p-toast></p-toast>
+  <div class="container-xl py-5">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-white mb-3">Prêt à améliorer votre sommeil ?</h2>
+      <p class="fs-5 muted">Prenez rendez-vous pour une consultation personnalisée.</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="form-card p-5 rounded-4">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <label class="form-label small text-white-50 mb-2">Prénom</label>
+              <input pInputText [(ngModel)]="form.firstName" placeholder="Votre prénom" class="w-100 input-dark" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small text-white-50 mb-2">Nom</label>
+              <input pInputText [(ngModel)]="form.lastName" placeholder="Votre nom" class="w-100 input-dark" />
+            </div>
+            <div class="col-12">
+              <label class="form-label small text-white-50 mb-2">Email</label>
+              <input pInputText [(ngModel)]="form.email" placeholder="votre@email.fr" type="email" class="w-100 input-dark" />
+            </div>
+            <div class="col-12">
+              <label class="form-label small text-white-50 mb-2">Message</label>
+              <textarea pTextarea [(ngModel)]="form.message" placeholder="Décrivez votre situation..." rows="5" class="w-100 input-dark textarea-no-resize"></textarea>
+            </div>
+            <div class="col-12 d-flex gap-3 flex-wrap">
+              <p-button label="Envoyer le message" icon="pi pi-send" size="large" styleClass="flex-grow-1" (onClick)="submit()"></p-button>
+              <p-button label="contact@ramlatadahalani.fr" icon="pi pi-envelope" size="large" [outlined]="true" severity="secondary" (onClick)="mailto()"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

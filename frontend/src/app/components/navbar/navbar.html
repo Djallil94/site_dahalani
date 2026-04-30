@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg px-4 navbar-custom">
+  <div class="container-xl">
+    <a class="navbar-brand gap-2 text-white fw-semibold fs-5" routerLink="/">
+      <i class="pi pi-moon" style="color: #60a5fa; font-size: 1.4rem;"></i>
+      Ramlata DAHALANI
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="pi pi-bars text-white"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+      <ul class="navbar-nav gap-3 align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link text-white-50 nav-link-custom"
+             routerLink="/services"
+             routerLinkActive="nav-link-active">
+            Services
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white-50 nav-link-custom"
+             routerLink="/page-expertise"
+             routerLinkActive="nav-link-active">
+            Expertise
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white-50 nav-link-custom"
+             routerLink="/contact"
+             routerLinkActive="nav-link-active">
+            Contact
+          </a>
+        </li>
+        <li class="nav-item">
+          <p-button
+            label="Rendez-vous"
+            size="small"
+            routerLink="/contact">
+          </p-button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

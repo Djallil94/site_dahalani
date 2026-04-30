@@ -1,0 +1,26 @@
+<section class="py-5 section-bg">
+  <div class="container-xl py-5">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-white mb-3">Domaines d'intervention</h2>
+      <p class="fs-5 mx-auto muted" style="max-width: 560px;">
+        Une approche holistique pour améliorer la qualité de votre sommeil et votre bien-être professionnel
+      </p>
+    </div>
+    <div class="row g-4 mb-5">
+      <div class="col-md-6" *ngFor="let d of domains">
+        <div class="domain-card h-100 p-4 rounded-3">
+          <h3 class="h5 fw-semibold mb-4 accent">{{ d.title }}</h3>
+          <ul class="list-unstyled mb-0">
+            <li class="d-flex align-items-start gap-2 mb-3" *ngFor="let item of d.items">
+              <i class="pi pi-circle-fill mt-1 flex-shrink-0 bullet"></i>
+              <span class="small item-text">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <p-button label="Prendre rendez-vous" icon="pi pi-calendar" size="large" routerLink="/contact"></p-button>
+    </div>
+  </div>
+</section>

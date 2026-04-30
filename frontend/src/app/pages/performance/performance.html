@@ -1,0 +1,33 @@
+<section class="py-5 section-bg">
+  <div class="container-xl py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 text-white">
+        <h2 class="display-5 fw-bold mb-4">Sommeil & Performance au travail</h2>
+        <p class="mb-4 body-text">
+          Un sommeil de qualité est essentiel pour maintenir une performance optimale dans votre environnement professionnel. Mes interventions visent à vous aider à comprendre et améliorer votre sommeil.
+        </p>
+        <p class="mb-5 body-text">
+          En tant qu'infirmière spécialisée, je mets mon expertise clinique au service des professionnels et des entreprises pour développer des stratégies concrètes d'amélioration du repos et de la vigilance.
+        </p>
+        <div class="row g-4 mb-5">
+          <div class="col-6" *ngFor="let stat of stats">
+            <div class="stat-item ps-3">
+              <div class="display-6 fw-bold accent">{{ stat.value }}</div>
+              <div class="small muted">{{ stat.label }}</div>
+            </div>
+          </div>
+        </div>
+        <p-button label="Voir mon expertise" icon="pi pi-arrow-right" routerLink="/expertise"></p-button>
+      </div>
+      <div class="col-lg-6">
+        <div class="rounded-4 overflow-hidden perf-image">
+          <img
+            src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80"
+            alt="Performance au travail"
+            class="w-100 h-100 object-fit-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
