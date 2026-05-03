@@ -10,15 +10,30 @@ import java.util.List;
 @Service
 public class MessageService {
     private final MessageRepository messageRepository;
+    private final MailService mailService;
 
-    public MessageService(MessageRepository messageRepository) {
+    public MessageService(MessageRepository messageRepository, MailService mailService) {
         this.messageRepository = messageRepository;
+        this.mailService = mailService;
     }
 
     public Message sauvegarderMessage(Message message) {
         message.setDateEnvoi(LocalDate.now());
+        Message messageSauvegarde = messageRepository.save(message);
 
-        return messageRepository.save(message);
+        // Envoie les deux mails après sauvegarde en base
+        mailService.envoyerMailAuCabinet(
+                message.getNomExpediteur(),
+                message.getEmail(),
+                message.getContenu()
+        );
+        mailService.envoyerConfirmationAuPatient(
+                message.getNomExpediteur(),
+                message.getEmail(),
+                message.getContenu()
+        );
+
+        return messageSauvegarde;
     }
 
     public List<Message> recupererTousLesMessages() {
