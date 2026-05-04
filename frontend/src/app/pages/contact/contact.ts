@@ -58,7 +58,7 @@ export class Contact {
       contenu: this.form.message
     };
 
-    this.http.post('http://localhost:8081/api/messages', body).subscribe({
+    this.http.post('https://sitedahalani-production.up.railway.app/', body).subscribe({
       next: () => {
         // Succès
         this.messageService.add({
