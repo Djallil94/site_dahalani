@@ -21,17 +21,22 @@ public class MessageService {
         message.setDateEnvoi(LocalDate.now());
         Message messageSauvegarde = messageRepository.save(message);
 
-        // Envoie les deux mails après sauvegarde en base
-        mailService.envoyerMailAuCabinet(
-                message.getNomExpediteur(),
-                message.getEmail(),
-                message.getContenu()
-        );
-        mailService.envoyerConfirmationAuPatient(
-                message.getNomExpediteur(),
-                message.getEmail(),
-                message.getContenu()
-        );
+        // On essaie d'envoyer les mails mais sans bloquer si ça échoue
+        try {
+            mailService.envoyerMailAuCabinet(
+                    message.getNomExpediteur(),
+                    message.getEmail(),
+                    message.getContenu()
+            );
+            mailService.envoyerConfirmationAuPatient(
+                    message.getNomExpediteur(),
+                    message.getEmail(),
+                    message.getContenu()
+            );
+        } catch (Exception e) {
+            // L'email a échoué mais le message est sauvegardé
+            System.err.println("Envoi email échoué : " + e.getMessage());
+        }
 
         return messageSauvegarde;
     }
