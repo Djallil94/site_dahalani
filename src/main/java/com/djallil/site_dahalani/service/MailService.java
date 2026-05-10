@@ -1,42 +1,60 @@
 package com.djallil.site_dahalani.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
+
+import java.util.Map;
+import java.util.List;
 
 @Service
 public class MailService {
 
-    private final JavaMailSender mailSender;
+    @Value("${brevo.api.key}")
+    private String apiKey;
 
-    // L'adresse Gmail du site configurée dans application.yaml
     @Value("${spring.mail.username}")
     private String mailDuSite;
 
-    public MailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    private final RestTemplate restTemplate = new RestTemplate();
+    private static final String BREVO_URL = "https://api.brevo.com/v3/smtp/email";
+
+    private void envoyerEmail(String destinataire, String sujet, String contenu) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("api-key", apiKey);
+
+        Map<String, Object> body = Map.of(
+                "sender", Map.of("email", mailDuSite, "name", "Cabinet Dahalani"),
+                "to", List.of(Map.of("email", destinataire)),
+                "subject", sujet,
+                "textContent", contenu
+        );
+
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+
+        try {
+            restTemplate.postForEntity(BREVO_URL, request, String.class);
+        } catch (Exception e) {
+            System.err.println("Erreur envoi email : " + e.getMessage());
+        }
     }
 
-    // Mail envoyé au cabinet avec le message du patient
     public void envoyerMailAuCabinet(String nomPatient, String emailPatient, String message) {
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(mailDuSite);                          // destinataire : le cabinet
-        mail.setSubject("Nouveau message de " + nomPatient);
-        mail.setText(
+        envoyerEmail(
+                mailDuSite,
+                "Nouveau message de " + nomPatient,
                 "Nom : " + nomPatient + "\n" +
                         "Email : " + emailPatient + "\n\n" +
                         "Message :\n" + message
         );
-        mailSender.send(mail);
     }
 
-    // Mail de confirmation envoyé au patient
     public void envoyerConfirmationAuPatient(String nomPatient, String emailPatient, String message) {
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(emailPatient);                        // destinataire : le patient
-        mail.setSubject("Votre message a bien été reçu");
-        mail.setText(
+        envoyerEmail(
+                emailPatient,
+                "Votre message a bien été reçu",
                 "Bonjour " + nomPatient + ",\n\n" +
                         "Votre message a bien été reçu. Nous vous répondrons dans les plus brefs délais.\n\n" +
                         "Voici une copie de votre message :\n" +
@@ -46,6 +64,5 @@ public class MailService {
                         "Cordialement,\n" +
                         "Cabinet Ramlata Dahalani"
         );
-        mailSender.send(mail);
     }
 }
